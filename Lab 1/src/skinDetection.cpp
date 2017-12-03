@@ -101,7 +101,12 @@ bool Detection3(Vec3b color){
 	return part1 && part2 && part3;
 }
 
-bool 
+bool Detection4(Vec3b color){
+	bool part1 = 0 < getH(color) && getH(color) < 50;
+	bool part2 = 0.23 < getS(color) && getS(color) < 0.68;
+
+	return part1 && part2;
+}
 
 int main(){
 	Mat img[12];
@@ -139,7 +144,7 @@ int main(){
 					1 --> G
 					2 --> R
 				*/
-				if(Detection1(color)){
+				if(Detection4(color)){
 					color[0] = 0;
 					color[1] = 0;
 					color[2] = 255;
