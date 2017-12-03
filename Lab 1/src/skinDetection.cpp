@@ -72,7 +72,7 @@ float getS(Vec3b color){
 }
 
 float getI(Vec3b color){
-	float I = (1 / 3) * (color[0] + color[1] + color[2]);
+	float I = (1 / 3) * ((float)color[0] + (float)color[1] + (float)color[2]);
 
 	return I;
 }
@@ -92,6 +92,16 @@ bool Detection2(Vec3b color){
 
 	return part1 && part2 && part3;
 }
+
+bool Detection3(Vec3b color){
+	bool part1 = getI(color) >= 0.4;
+	bool part2 = 0.2 < getS(color) && getS(color) > 0.6;
+	bool part3 = (0 < getH(color) && getH(color) < 25) || (335 < getH(color) && getH(color) <= 360);
+
+	return part1 && part2 && part3;
+}
+
+bool 
 
 int main(){
 	Mat img[12];
@@ -129,7 +139,7 @@ int main(){
 					1 --> G
 					2 --> R
 				*/
-				if(Detection2(color)){
+				if(Detection1(color)){
 					color[0] = 0;
 					color[1] = 0;
 					color[2] = 255;
