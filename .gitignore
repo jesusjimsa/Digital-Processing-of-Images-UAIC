@@ -220,7 +220,8 @@ compile_commands.json
 CTestTestfile.cmake
 build
 
-## skinDetection ##
+## Executables ##
 skinDetection
+emoji
 
 # End  of https://www.gitignore.io/api/c,c++,macos,xcode,matlab,opencv,visualstudiocode
