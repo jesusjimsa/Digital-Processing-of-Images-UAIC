@@ -16,6 +16,9 @@
 using namespace std;
 using namespace cv;
 
+/*
+	Functions to get max and min values
+*/
 int max(int first, int second, int third){
 	int max = first;
 
@@ -58,6 +61,9 @@ float min(float first, float second, float third){
 	return min;
 }
 
+/*
+	Functions to get HSI values from RGB
+*/
 float getH(Vec3b color){
 	float angle = acos((((float)color[2] - (float)color[1]) + ((float)color[2] - (float)color[0])) / (2 * sqrt(((float)color[2] - (float)color[1]) * ((float)color[2] - (float)color[1]) + ((float)color[2] - (float)color[0]) * ((float)color[1] - (float)color[0]))));
 	float H = ((float)color[0] <= (float)color[1]) ? angle : (360 - angle);
@@ -77,6 +83,24 @@ float getI(Vec3b color){
 	return I;
 }
 
+/*
+	Functions to get YCbCr from RGB
+*/
+float getY(Vec3b color){
+	return 16 + (65.481 * (float)color[2] + 128.553 * (float)color[1] + 24.966 * (float)color[0]);
+}
+
+float getCb(Vec3b color){
+	return 128 + (-37.797 * (float)color[2] - 74.203 * (float)color[1] + 112.0 * (float)color[0]);
+}
+
+float getCr(Vec3b color){
+	return 128 + (128.0 * (float)color[2] - 93.786 * (float)color[1] - 18.214 * (float)color[0]);
+}
+
+/*
+	Functions to detect skin in different ways
+*/
 bool Detection1(Vec3b color){
 	bool part1 = (int)color[0] > 20 && (int)color[1] > 40 && (int)color[2] > 95;
 	bool part2 = (max((int)color[0], (int)color[1], (int)color[2]) - min((int)color[0], (int)color[1], (int)color[2])) > 15;
