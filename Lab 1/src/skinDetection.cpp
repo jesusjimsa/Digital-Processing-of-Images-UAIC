@@ -146,8 +146,15 @@ bool Detection5(Vec3b color){
 
 // Based on YCbCr
 bool Detection6(Vec3b color){
-	bool part1 = getY(color) > 80 && 85 < getCb(color) && getCb(color) > 135 && 135 < getCr(color) && getCr(color) < 180;
+	bool part1 = getY(color) > 80 && 85 < getCb(color) && getCb(color) < 135 && 135 < getCr(color) && getCr(color) < 180;
 	bool part2 = (0 < getY(color) && getY(color) < 255) && (0 < getCb(color) && getCb(color) < 255) && (0 < getCr(color) && getCr(color) < 255);
+
+	return part1 && part2;
+}
+
+bool Detection7(Vec3b color){
+	bool part1 = 80 <= getCb(color) && getCb(color) <= 120;
+	bool part2 = 133 <= getCr(color) && getCr(color) <= 173;
 
 	return part1 && part2;
 }
@@ -188,7 +195,7 @@ int main(){
 					1 --> G
 					2 --> R
 				*/
-				if(Detection6(color)){
+				if(Detection1(color)){
 					color[0] = 0;
 					color[1] = 0;
 					color[2] = 255;
