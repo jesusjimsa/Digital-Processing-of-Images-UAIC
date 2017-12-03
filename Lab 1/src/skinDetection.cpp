@@ -44,6 +44,39 @@ int min(int first, int second, int third){
 	return min;
 }
 
+float min(float first, float second, float third){
+	float min = first;
+
+	if(second < min){
+		min = second;
+	}
+
+	if(third < min){
+		min = third;
+	}
+
+	return min;
+}
+
+float getH(Vec3b color){
+	float angle = acos((((float)color[2] - (float)color[1]) + ((float)color[2] - (float)color[0])) / (2 * sqrt(((float)color[2] - (float)color[1]) * ((float)color[2] - (float)color[1]) + ((float)color[2] - (float)color[0]) * ((float)color[1] - (float)color[0]))));
+	float H = ((float)color[0] <= (float)color[1]) ? angle : (360 - angle);
+
+	return H;
+}
+
+float getS(Vec3b color){
+	float S = 1 - ((3 / ((float)color[0] + (float)color[1] + (float)color[2])) * min((float)color[0], (float)color[1], (float)color[2]));
+
+	return S;
+}
+
+float getI(Vec3b color){
+	float I = (1 / 3) * (color[0] + color[1] + color[2]);
+
+	return I;
+}
+
 bool Detection1(Vec3b color){
 	bool part1 = (int)color[0] > 20 && (int)color[1] > 40 && (int)color[2] > 95;
 	bool part2 = (max((int)color[0], (int)color[1], (int)color[2]) - min((int)color[0], (int)color[1], (int)color[2])) > 15;
