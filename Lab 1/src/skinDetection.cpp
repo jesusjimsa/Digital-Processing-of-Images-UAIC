@@ -1,5 +1,5 @@
 //
-//  jeje.cpp
+//  skinDetection.cpp
 //  Lab 1
 //
 //  Created by Jesús Jiménez Sánchez on 27/11/17.
