@@ -52,6 +52,14 @@ bool Detection1(Vec3b color){
 	return part1 && part2 && part3;
 }
 
+bool Detection2(Vec3b color){
+	bool part1 = ((float)color[2] / (float)color[1]) > 1.185;
+	bool part2 = (((float)color[2] * (float)color[0]) / (((float)color[0] + (float)color[1] + (float)color[2]) * ((float)color[0] + (float)color[1] + (float)color[2]))) > 0.107;
+	bool part3 = (((float)color[2] * (float)color[1]) / (((float)color[0] + (float)color[1] + (float)color[2]) * ((float)color[0] + (float)color[1] + (float)color[2]))) > 0.112;
+
+	return part1 && part2 && part3;
+}
+
 int main(){
 	Mat img[12];
 	Vec3b color;
@@ -88,7 +96,7 @@ int main(){
 					1 --> G
 					2 --> R
 				*/
-				if(Detection1(color)){
+				if(Detection2(color)){
 					color[0] = 0;
 					color[1] = 0;
 					color[2] = 255;
