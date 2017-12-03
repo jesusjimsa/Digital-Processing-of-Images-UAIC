@@ -101,6 +101,7 @@ float getCr(Vec3b color){
 /*
 	Functions to detect skin in different ways
 */
+// Based on RGB 
 bool Detection1(Vec3b color){
 	bool part1 = (int)color[0] > 20 && (int)color[1] > 40 && (int)color[2] > 95;
 	bool part2 = (max((int)color[0], (int)color[1], (int)color[2]) - min((int)color[0], (int)color[1], (int)color[2])) > 15;
@@ -109,6 +110,7 @@ bool Detection1(Vec3b color){
 	return part1 && part2 && part3;
 }
 
+// Based on RGB
 bool Detection2(Vec3b color){
 	bool part1 = ((float)color[2] / (float)color[1]) > 1.185;
 	bool part2 = (((float)color[2] * (float)color[0]) / (((float)color[0] + (float)color[1] + (float)color[2]) * ((float)color[0] + (float)color[1] + (float)color[2]))) > 0.107;
@@ -117,6 +119,7 @@ bool Detection2(Vec3b color){
 	return part1 && part2 && part3;
 }
 
+// Based on HSI
 bool Detection3(Vec3b color){
 	bool part1 = getI(color) >= 0.4;
 	bool part2 = 0.2 < getS(color) && getS(color) > 0.6;
@@ -125,6 +128,7 @@ bool Detection3(Vec3b color){
 	return part1 && part2 && part3;
 }
 
+// Based on HSI
 bool Detection4(Vec3b color){
 	bool part1 = 0 < getH(color) && getH(color) < 50;
 	bool part2 = 0.23 < getS(color) && getS(color) < 0.68;
@@ -132,11 +136,20 @@ bool Detection4(Vec3b color){
 	return part1 && part2;
 }
 
+// Based on HSI
 bool Detection5(Vec3b color){
 	bool part1 = getS(color) >= 10 && getI(color) >= 20 && getS(color) <= (110 - getH(color) - (0.1 * getI(color)));
 	bool part2 = getH(color) <= (75 - (0.4 * getI(color)));
 
 	return part1 || part2;
+}
+
+// Based on YCbCr
+bool Detection6(Vec3b color){
+	bool part1 = getY(color) > 80 && 85 < getCb(color) && getCb(color) > 135 && 135 < getCr(color) && getCr(color) < 180;
+	bool part2 = (0 < getY(color) && getY(color) < 255) && (0 < getCb(color) && getCb(color) < 255) && (0 < getCr(color) && getCr(color) < 255);
+
+	return part1 && part2;
 }
 
 int main(){
@@ -175,7 +188,7 @@ int main(){
 					1 --> G
 					2 --> R
 				*/
-				if(Detection5(color)){
+				if(Detection6(color)){
 					color[0] = 0;
 					color[1] = 0;
 					color[2] = 255;
