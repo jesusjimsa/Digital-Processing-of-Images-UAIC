@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <vector>
 #include <opencv2/core/core.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -66,36 +67,66 @@ float min(float first, float second, float third){
 */
 float getH(Vec3b color){
 	float angle = acos((((float)color[2] - (float)color[1]) + ((float)color[2] - (float)color[0])) / (2 * sqrt(((float)color[2] - (float)color[1]) * ((float)color[2] - (float)color[1]) + ((float)color[2] - (float)color[0]) * ((float)color[1] - (float)color[0]))));
-	float H = ((float)color[0] <= (float)color[1]) ? angle : (360 - angle);
+	float H = ((float)color[0] <= (float)color[1]) ? angle : (360.0 - angle);
 
 	return H;
 }
 
 float getS(Vec3b color){
-	float S = 1 - ((3 / ((float)color[0] + (float)color[1] + (float)color[2])) * min((float)color[0], (float)color[1], (float)color[2]));
+	float S = 1.0 - ((3.0 / ((float)color[0] + (float)color[1] + (float)color[2])) * min((float)color[0], (float)color[1], (float)color[2]));
 
 	return S;
 }
 
 float getI(Vec3b color){
-	float I = (1 / 3) * ((float)color[0] + (float)color[1] + (float)color[2]);
+	float I = (1.0 / 3.0) * ((float)color[0] + (float)color[1] + (float)color[2]);
 
 	return I;
 }
 
 /*
 	Functions to get YCbCr from RGB
+	Method found at http://www.equasys.de/colorconversion.html
 */
+vector< vector<float> > conversionMatrix(){
+	vector< vector<float> > matrix(3);
+
+	matrix[0].reserve(3);
+	matrix[1].reserve(3);
+	matrix[2].reserve(3);
+
+	matrix[0][0] = 0.299;
+	matrix[0][1] = 0.587;
+	matrix[0][2] = 0.114;
+	matrix[1][0] = -0.169;
+	matrix[1][1] = -0.331;
+	matrix[1][2] = 0.500;
+	matrix[2][0] = 0.500;
+	matrix[2][1] = -0.419;
+	matrix[2][2] = -0.081;
+
+	return matrix;
+}
+
 float getY(Vec3b color){
-	return 16 + (65.481 * (float)color[2] + 128.553 * (float)color[1] + 24.966 * (float)color[0]);
+	//return 16 + (65.481 * (float)color[2] + 128.553 * (float)color[1] + 24.966 * (float)color[0]) / 255;
+	vector< vector<float> > matrix = conversionMatrix();
+
+	return matrix[0][0] * color[2] + matrix[0][1] * color[1] + matrix[0][2] * color[0];
 }
 
 float getCb(Vec3b color){
-	return 128 + (-37.797 * (float)color[2] - 74.203 * (float)color[1] + 112.0 * (float)color[0]);
+	//return 128 + (-37.797 * (float)color[2] - 74.203 * (float)color[1] + 112.0 * (float)color[0]) / 255;
+	vector< vector<float> > matrix = conversionMatrix();
+
+	return 128 + (matrix[1][0] * color[2] + matrix[1][1] * color[1] + matrix[1][2] * color[0]);
 }
 
 float getCr(Vec3b color){
-	return 128 + (128.0 * (float)color[2] - 93.786 * (float)color[1] - 18.214 * (float)color[0]);
+	//return 128 + (128.0 * (float)color[2] - 93.786 * (float)color[1] - 18.214 * (float)color[0]) / 255;
+	vector< vector<float> > matrix = conversionMatrix();
+
+	return 128 + (matrix[2][0] * color[2] + matrix[2][1] * color[1] + matrix[2][2] * color[0]);
 }
 
 /*
@@ -195,7 +226,7 @@ int main(){
 					1 --> G
 					2 --> R
 				*/
-				if(Detection1(color)){
+				if(Detection7(color)){
 					color[0] = 0;
 					color[1] = 0;
 					color[2] = 255;
