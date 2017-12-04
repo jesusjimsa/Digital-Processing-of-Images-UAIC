@@ -16,3 +16,8 @@ These are the results obtained by the different methods on the image _manwoman.j
 
 *YCbCr*  
 ![YCbCr](https://i.imgur.com/uspNcbJ.png "YCbCr")  
+
+### emoji
+This is the emoji I designed.  
+
+![emoji](https://i.imgur.com/4YXlIfx.png "emoji")
