@@ -9,7 +9,7 @@ These are the results obtained by the different methods on the image _manwoman.j
 ![Original](https://raw.githubusercontent.com/jesusjimsa/Digital-Processing-of-Images-UAIC/master/Lab%201/Images/manwoman.jpg?token=APUv-JAfKOj5zkUnHNMSDv4BXE5yIZ2Fks5aLljewA%3D%3D  "Original")
 
 *RGB*  
-![RGB](https://i.imgur.com/ozp9B48.png "RGB")  
+![RGB](https://i.imgur.com/ozp9B48.png "RGB")   
 
 *HSV*  
 ![HSV](https://i.imgur.com/Fh7MWX9.png "HSV")  
