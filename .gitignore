@@ -223,5 +223,6 @@ build
 ## Executables ##
 skinDetection
 emoji
+ColorToGray
 
 # End  of https://www.gitignore.io/api/c,c++,macos,xcode,matlab,opencv,visualstudiocode
