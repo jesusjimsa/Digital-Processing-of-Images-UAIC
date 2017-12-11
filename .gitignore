@@ -224,5 +224,6 @@ build
 skinDetection
 emoji
 ColorToGray
+morphological
 
 # End  of https://www.gitignore.io/api/c,c++,macos,xcode,matlab,opencv,visualstudiocode
