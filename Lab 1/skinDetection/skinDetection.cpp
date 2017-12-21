@@ -205,8 +205,6 @@ void detectAndDisplay(Mat frame){
 	Mat crop;
 	Mat res;
 	Mat gray;
-	string text;
-	stringstream sstm;
 
 	cvtColor(frame, frame_gray, COLOR_BGR2GRAY);
 	equalizeHist(frame_gray, frame_gray);
@@ -251,25 +249,11 @@ void detectAndDisplay(Mat frame){
 		resize(crop, res, Size(128, 128), 0, 0, INTER_LINEAR); // This will be needed later while saving images
 		cvtColor(crop, gray, CV_BGR2GRAY); // Convert cropped image to Grayscale
 
-		// Form a filename
-		// filename = "";
-		// stringstream ssfn;
-		// ssfn << filenumber << ".png";
-		// filename = ssfn.str();
-		// filenumber++;
-
-		// imwrite(filename, gray);
-
 		Point pt1(faces[ic].x, faces[ic].y);	// Display detected faces on main window - live stream from camera
 		Point pt2((faces[ic].x + faces[ic].height), (faces[ic].y + faces[ic].width));
 		rectangle(frame, pt1, pt2, Scalar(0, 255, 0), 2, 8, 0);
 	}
 
-	// Show image
-	// sstm << "Crop area size: " << roi_b.width << "x" << roi_b.height << " Filename: " << filename;
-	// text = sstm.str();
-
-	//putText(frame, text, cvPoint(30, 30), FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(0, 0, 255), 1, CV_AA);
 	imshow("original", frame);
 
 	if(!crop.empty()){
@@ -348,12 +332,6 @@ int main(){
 		namedWindow(windowName, WINDOW_AUTOSIZE);	// Create a window for display.
 		imshow(windowName, img[i]);				// Show our image inside it.
 	}
-
-	// int c = waitKey(10);
-
-	// if (27 == char(c)){
-	// 	;
-	// }
 	
 	waitKey(0);									// Wait for a keystroke in the window
 }
