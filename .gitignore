@@ -225,5 +225,11 @@ skinDetection
 emoji
 ColorToGray
 morphological
+shapeDetection
+
+## Images ##
+dilatedRECT.png
+dilatedELL.png
+dilatedCROSS.png
 
 # End  of https://www.gitignore.io/api/c,c++,macos,xcode,matlab,opencv,visualstudiocode
