@@ -9,12 +9,15 @@ using namespace cv;
 
 int main(){
 	Mat img[4];
+	string windowName;
 	Mat ERelementRECT, ERelementELL, ERelementCROSS, DILelementRECT, DILelementELL, DILelementCROSS;
 	Mat erodedRECT, erodedELL, erodedCROSS, dilatedRECT, dilatedELL, dilatedCROSS;
-	string windowName;
+	Mat fixed;
+	int morph_size = 1;
+	Mat element = getStructuringElement(MORPH_RECT, Size(2 * morph_size + 1, 2 * morph_size + 1 ), Point(morph_size, morph_size));
 	int erosion_size = 1;
 	int dilation_size = 1;
-
+	
 	img[0] = imread("/Users/jesusjimsa/Dropbox/Documentos/Universidad/3 - Primer cuatrimestre/Digital Processing of Images/Prácticas/Digital-Processing-of-Images-UAIC/Lab 3/Images/basic_shapes.png");
 	img[1] = imread("/Users/jesusjimsa/Dropbox/Documentos/Universidad/3 - Primer cuatrimestre/Digital Processing of Images/Prácticas/Digital-Processing-of-Images-UAIC/Lab 3/Images/DIP_GW_page.tif");
 	img[2] = imread("/Users/jesusjimsa/Dropbox/Documentos/Universidad/3 - Primer cuatrimestre/Digital Processing of Images/Prácticas/Digital-Processing-of-Images-UAIC/Lab 3/Images/patrat_cu_pete.tif");
@@ -34,7 +37,7 @@ int main(){
 	erode(img[1], erodedRECT, ERelementRECT);
 	erode(img[1], erodedELL, ERelementELL);
 	erode(img[1], erodedCROSS, ERelementCROSS);
-
+ 	
 	//Dilation
 	DILelementRECT = getStructuringElement(MORPH_RECT, Size(2 * dilation_size + 1, 2 * dilation_size + 1), Point(dilation_size, dilation_size));
 	DILelementELL = getStructuringElement(MORPH_ELLIPSE, Size(2 * dilation_size + 1, 2 * dilation_size + 1), Point(dilation_size, dilation_size));
@@ -42,11 +45,22 @@ int main(){
 	erode(img[1], dilatedRECT, DILelementRECT);
 	erode(img[1], dilatedELL, DILelementELL);
 	erode(img[1], dilatedCROSS, DILelementCROSS);
+	
+	// Opening and closing
+	morphologyEx(img[1], fixed, MORPH_OPEN, element);
+	morphologyEx(fixed, fixed, MORPH_CLOSE, element);
+	morphologyEx(fixed, fixed, MORPH_OPEN, element);
+	morphologyEx(fixed, fixed, MORPH_CLOSE, element);
+	morphologyEx(fixed, fixed, MORPH_OPEN, element);
+	
+	// MORPH_OPEN
+	// MORPH_CLOSE
+	// MORPH_HITMISS
 
 	for(int i = 0; i < 4; i++){
 		windowName = "Image " + to_string(i);
 		
-		if(i == 1){
+		if(i != 1){
 			namedWindow(windowName, WINDOW_AUTOSIZE);	// Create a window for display.
 			imshow(windowName, img[i]);				// Show our image inside it.
 		}
@@ -71,6 +85,8 @@ int main(){
 	namedWindow("dilatedCROSS", WINDOW_AUTOSIZE);
 	imshow("dilatedCROSS.png", dilatedCROSS);
 	
+	namedWindow("fixed", WINDOW_AUTOSIZE);
+	imshow("fixed", fixed);
 	
 	waitKey(0);									// Wait for a keystroke in the window
 }
