@@ -226,6 +226,7 @@ emoji
 ColorToGray
 morphological
 shapeDetection
+genderRecognition
 
 ## Images ##
 dilatedRECT.png
