@@ -6,7 +6,7 @@ Exercises for the master subject of Digital Processing of Images in UAIC in Iaș
 These are the results obtained by the different methods on the image _manwoman.jpg_. 
 
 *Original*  
-![Original](https://raw.githubusercontent.com/jesusjimsa/Digital-Processing-of-Images-UAIC/master/Lab%201/Images/manwoman.jpg?token=APUv-I3Thh2VrXpGj2ffoH_3o9d-A0gmks5aN6IpwA%3D%3D  "Original")
+![Original](https://i.imgur.com/e06ppyp.jpg  "Original")
 
 *RGB*  
 ![RGB](https://i.imgur.com/ozp9B48.png "RGB")   
@@ -26,7 +26,7 @@ This is the emoji I designed.
 These are the results obtained by the different methods on the image _t26.jpg_.  
 
 *Original*  
-![Original](https://raw.githubusercontent.com/jesusjimsa/Digital-Processing-of-Images-UAIC/master/Lab%201/Images/t26.jpg?token=APUv-I_By7-ZChYt_VKE-0m1riBe6Rhsks5aNvFXwA%3D%3D  "Original")
+![Original](https://i.imgur.com/MecjVAG.jpg  "Original")
 
 *Simple Averaging*  
 ![Simple Averaging](https://i.imgur.com/67wxyDn.png "Simple Averaging")  
