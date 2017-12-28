@@ -12,6 +12,13 @@
 using namespace std;
 using namespace cv;
 
+// Global variables
+string face_cascade_name = "../../haarcascade_frontalface_alt.xml";
+CascadeClassifier face_cascade;
+string window_name = "Capture - Face detection";
+int filenumber;		// Number of file to be saved
+string filename;
+
 void readAndOpenPaths(vector<string> &pathsARR, vector<string> &pathsFeret, vector<int> &labelsARR, vector<int> &labelsFeret, vector<Mat> &ARR, vector<Mat> &Feret){
 	fstream ARRText, FeretText;
 	string line;
@@ -52,7 +59,7 @@ void readAndOpenPaths(vector<string> &pathsARR, vector<string> &pathsFeret, vect
 	ARRText.close();
 	FeretText.close();
 
-	cout << "Guardando fotos ARR" << endl;
+	cout << "Saving ARR" << endl;
 	for(int i = 0; i < pathsARR.size(); i++){
 		image = imread(pathsARR[i], CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -64,7 +71,7 @@ void readAndOpenPaths(vector<string> &pathsARR, vector<string> &pathsFeret, vect
 		ARR.push_back(image);
 	}
 
-	cout << "Guardando fotos Feret" << endl;
+	cout << "Saving Feret" << endl;
 	for(int i = 0; i < pathsFeret.size(); i++){
 		image = imread(pathsFeret[i], CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -83,17 +90,9 @@ int main(){
 	vector<int> labelsARR, labelsFeret;
 	vector<Mat> ARR, Feret;
 	vector<int> labelARR, labelFeret;
-	string windowName;
-	int heightARR, heightFeret;
+	string recognised;
 
 	readAndOpenPaths(pathsARR, pathsFeret, labelsARR, labelsFeret, ARR, Feret);
-
-	/*
-		We'll need this later in code to reshape the
-		images to their original size
-	*/
-	heightARR = ARR[0].rows;
-	//heightFeret = Feret[0].rows;
 
 	/*
 		This is done, so that the training data and the
@@ -109,7 +108,7 @@ int main(){
 		face recognition and train it with the images and
 		labels read from the given text file.
 	*/
-	cout << "Entrenando el sistema" << endl;
+	cout << "Training the system" << endl;
 	Ptr<FaceRecognizer> model = createFisherFaceRecognizer();
 	model->train(ARR, labelsARR);
 
@@ -117,15 +116,11 @@ int main(){
 		The following line predicts the label of a given
 		test image:
 	*/
-	cout << "Prediciendo el ejemplo" << endl;
+	cout << "Predicting" << endl;
 	int predictedLabel = model->predict(testSample);
+	recognised = (predictedLabel == 1) ? "Man" : "Woman";
 
-	if(predictedLabel == 1){
-		cout << "Hombre" << endl;
-	}
-	else{
-		cout << "Mujer" << endl;
-	}
+	cout << recognised << endl;
 
 	pathsARR.clear();
 	pathsFeret.clear();
