@@ -227,6 +227,7 @@ ColorToGray
 morphological
 shapeDetection
 genderRecognition
+boundary
 
 ## Images ##
 dilatedRECT.png
