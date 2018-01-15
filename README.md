@@ -1,6 +1,16 @@
 # Digital Processing of Images UAIC
 Exercises for the master subject of Digital Processing of Images in UAIC in Iași.  
 
+1. [Lab 1](#lab-1)
+	1. [skinDetection](#skinDetection)
+	2. [Face Detection](#face-detection)
+	3. [emoji](#emoji)
+2. [Lab 2](#lab-2)
+3. [Lab 3](#lab-3)
+	1. [morphological](#morphological)
+	2. [shapeDetection](#shapeDetection)
+	3. [Boundary extraction](#boundary-extraction)
+
 ## Lab 1
 ### skinDetection
 These are the results obtained by the different methods on the image _manwoman.jpg_. 
@@ -16,6 +26,9 @@ These are the results obtained by the different methods on the image _manwoman.j
 
 *YCbCr*  
 ![YCbCr](https://i.imgur.com/uspNcbJ.png "YCbCr")  
+
+### Face Detection
+![Face Detection](https://i.imgur.com/zJ66p2P.png "Face Detection")
 
 ### emoji
 This is the emoji I designed.  
@@ -60,3 +73,28 @@ These are the results obtained by the different methods on the image _t26.jpg_.
 
 *Gray Shades*  
 ![Gray Shades](https://i.imgur.com/tQgUOJr.png "Gray Shades")  
+
+## Lab 3
+### morphological
+
+*Original*  
+![Original](https://i.imgur.com/9nTbZdw.png "Original")
+
+*Fixed*  
+![Fixed](https://i.imgur.com/BpN4fGD.png "Fixed")
+
+### shapeDetection
+
+*Original*  
+![Original](https://i.imgur.com/XgTWdvh.png "Original")
+
+*Detected*  
+![Detected](https://i.imgur.com/zrLFacW.png "Detected")
+
+### Boundary extraction
+
+*Original*  
+![Original](https://i.imgur.com/l8N0TW1.png "Original")
+
+*Boundary extracted*  
+![Extracted](https://i.imgur.com/VfdHd2N.png "Extracted")
