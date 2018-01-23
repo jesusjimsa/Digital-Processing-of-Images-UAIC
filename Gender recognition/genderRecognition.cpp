@@ -15,9 +15,6 @@ using namespace cv;
 // Global variables
 string face_cascade_name = "../../haarcascade_frontalface_alt.xml";
 CascadeClassifier face_cascade;
-string window_name = "Capture - Face detection";
-int filenumber;		// Number of file to be saved
-string filename;
 
 void readAndOpenPaths(vector<string> &pathsARR, vector<string> &pathsFeret, vector<int> &labelsARR, vector<int> &labelsFeret, vector<Mat> &ARR, vector<Mat> &Feret){
 	fstream ARRText, FeretText;
@@ -89,10 +86,32 @@ int main(){
 	vector<string> pathsFeret;
 	vector<int> labelsARR, labelsFeret;
 	vector<Mat> ARR, Feret;
-	vector<int> labelARR, labelFeret;
-	string recognised;
-
+	string recognised;	
+	int heightCrop, widthCrop, xCrop, yCrop;
+	int predictedLabel;
+	double success;
+	double percentage = 0.0;
+	
 	readAndOpenPaths(pathsARR, pathsFeret, labelsARR, labelsFeret, ARR, Feret);
+
+	/*
+		We get the height of Feret images because they are
+		smaller than ARR images and we will need to crop
+		them to be able to pass Feret images and calculate
+		a success percentage.
+	*/
+	heightCrop = Feret[0].rows;
+	widthCrop = Feret[0].cols;
+	xCrop = 270;
+	yCrop = 66;
+
+	/*
+		Now, the ARR images are resized
+	*/
+
+	// for(int i = 0; i < ARR.size(); i++){
+	// 	resize(ARR[i], ARR[i], Feret[0].size());
+	// }
 
 	/*
 		This is done, so that the training data and the
@@ -108,19 +127,66 @@ int main(){
 		face recognition and train it with the images and
 		labels read from the given text file.
 	*/
-	cout << "Training the system" << endl;
-	Ptr<FaceRecognizer> model = createFisherFaceRecognizer();
-	model->train(ARR, labelsARR);
+	cout << "Training the system with ARR" << endl;
+	Ptr<FaceRecognizer> modelARR = createFisherFaceRecognizer();
+	modelARR->train(ARR, labelsARR);
+
+	// cout << "Training the system with Feret" << endl;
+	// Ptr<FaceRecognizer> modelFeret = createFisherFaceRecognizer();
+	// modelFeret->train(Feret, labelsFeret);
 
 	/*
 		The following line predicts the label of a given
 		test image:
 	*/
 	cout << "Predicting" << endl;
-	int predictedLabel = model->predict(testSample);
+	predictedLabel = modelARR->predict(testSample);
 	recognised = (predictedLabel == 1) ? "Man" : "Woman";
 
-	cout << recognised << endl;
+	cout << "Recognised: " << recognised << endl;
+
+	/*
+		Calculation of the success ratio
+	*/
+	// cout << "Calculating success ratio in Feret" << endl;
+	// success = 0.0;
+
+	// for(int i = 0; i < Feret.size(); i++){
+	// 	predictedLabel = modelARR->predict(Feret[i]);
+
+	// 	if(predictedLabel == labelsFeret[i]){
+	// 		success += 1.0;
+	// 	}
+	// 	else{
+	// 		success -= 1.0;
+	// 	}
+	// }
+
+	// if(success > 0){
+	// 	percentage = (success / Feret.size()) * 100;
+	// }
+
+	// cout << "Success percentage while recognising Feret images --> " << percentage << "%" << endl;
+
+	// cout << "Calculating success ratio in ARR" << endl;
+	// success = 0.0;
+
+	// for(int i = 0; i < ARR.size(); i++){
+	// 	predictedLabel = modelFeret->predict(ARR[i]);
+
+	// 	if(predictedLabel == labelsARR[i]){
+	// 		success += 1.0;
+	// 	}
+	// 	else{
+	// 		success -= 1.0;
+	// 	}
+	// }
+
+	// if(success > 0){
+	// 	percentage = (success / ARR.size()) * 100;
+	// }
+
+	// cout << "Success percentage while recognising ARR images --> " << percentage << "%" << endl;
 
 	pathsARR.clear();
 	pathsFeret.clear();
